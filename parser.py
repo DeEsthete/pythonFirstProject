@@ -26,11 +26,25 @@ headers = {
     }
 
 r = requests.get(url, headers=headers, timeout=40, verify=False)
-print(r.text)
-
 soup = bs4.BeautifulSoup(r.text, 'html.parser')
-# spans = soup.find_all("span", {'class': 'a-el-info-title'}).find_all("a", recursive=False)
-f = open('links.txt', 'w')
+
+links = []
+names = []
+prices = []
+
 for x in soup.select('span.a-el-info-title > a'):
-        f.write("https://kolesa.kz" + x['href'] + "\n")
+        links.append(x['href'])
+        names.append(x.text)
+for x in soup.select('span.price'):
+        prices.append(x.text)
+
+f = open('links.txt', 'w')
+
+print(links)
+print(names)
+print(prices)
+
+for i, x in enumerate(links):
+        f.write(x + ", " + names[i] + ", " + prices[i] + "\n")
+
 f.close()
