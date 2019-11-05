@@ -36,15 +36,20 @@ for x in soup.select('span.a-el-info-title > a'):
         links.append(x['href'])
         names.append(x.text)
 for x in soup.select('span.price'):
-        prices.append(x.text)
+        temp = x.text
+        temp = temp.strip()
+        prices.append(temp)
 
-f = open('links.txt', 'w')
+f = open('links.csv', 'w', encoding='utf-8')
 
-print(links)
-print(names)
-print(prices)
+# print(links)
+# print(names)
+# print(prices)
+
+temp = ""
 
 for i, x in enumerate(links):
-        f.write(x + ", " + names[i] + ", " + prices[i] + "\n")
+        temp += host + links[i] + ", " + names[i] + ", " + prices[i] + "\n"
 
+f.write(temp)
 f.close()
